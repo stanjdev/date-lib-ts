@@ -129,18 +129,55 @@ class D {
     return formattedString;
   }
 
+  sentenceFormatter(difference: number, string: string): string {
+    if (difference === 0) {
+      return '';
+    }
+    return `${Math.abs(difference)} ${string}${Math.abs(difference) === 1 ? '' : 's'} `;
+  }
+
   when(): string {
-    return ''
+    const now = new Date();
+    const yearDifference = now.getFullYear() - this.year;
+    const monthDifference = now.getMonth() - this._date.getMonth();
+    const dayDifference = now.getDate() - this.date;
+
+    let sentence = '';
+
+    sentence += this.sentenceFormatter(yearDifference, 'year');
+    sentence += this.sentenceFormatter(monthDifference, 'month');
+    sentence += this.sentenceFormatter(dayDifference, 'day');
+
+    // THIS IS BUGGY. REFINE IT!
+    if (yearDifference > 0 || monthDifference > 0 || dayDifference > 0) {
+      sentence += 'ago'
+    } else if (yearDifference < 0 || monthDifference < 0 || dayDifference < 0) {
+      sentence += 'from now'
+    }
+
+    return sentence || 'today';
   }
 }
 
-const a = new D()
-const b = new D('6/1/2022')
-const c = new D(1970, 1, 5, 0, 0, 0)
-const d = new D(new Date())
+// const a = new D()
+// const b = new D('6/1/2022')
+// const c = new D(1970, 1, 5, 0, 0, 0)
+// const d = new D(new Date())
 
-console.log(a.hours)
-console.log(b.date)
-console.log(c.mins)
-console.log(c.format('Y-M-D h:I:S'))
-console.log(d.format('h:i:s'))
+// console.log(a.hours)
+// console.log(b.date)
+// console.log(c.mins)
+// console.log(c.format('Y-M-D h:I:S'))
+// console.log(d.format('h:i:s'))
+// console.log(c.format('h/i/s'))
+
+const e = new D(2022, 0, 2, 3, 4, 5)
+console.log(e.when()) // 5 months ago
+const f = new D(2022, 9, 2, 3, 4, 5)
+console.log(f.when()) // 4 months 7 days from now
+const g = new D(2022, 5, 5, 3, 4, 5)
+console.log(g.when()) // 5 years from now
+const h = new D(2021, 3, 30, 3, 4, 5)
+console.log(h.when()) // 3 days from now
+const j = new D()
+console.log(j.when()) // today

@@ -18,5 +18,9 @@
     "@typescript-eslint/parser": "^5.27.1",
     "eslint": "^8.17.0",
     "jest": "^28.1.0"
+  },  
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stanjdev/date-textcontent-lib.git"
   }
 }

@@ -167,14 +167,48 @@ var D = /** @class */ (function () {
         }
         return formattedString;
     };
+    D.prototype.sentenceFormatter = function (difference, string) {
+        if (difference === 0) {
+            return '';
+        }
+        return "".concat(Math.abs(difference), " ").concat(string).concat(Math.abs(difference) === 1 ? '' : 's', " ");
+    };
+    D.prototype.when = function () {
+        var now = new Date();
+        var yearDifference = now.getFullYear() - this.year;
+        var monthDifference = now.getMonth() - this._date.getMonth();
+        var dayDifference = now.getDate() - this.date;
+        var sentence = '';
+        sentence += this.sentenceFormatter(yearDifference, 'year');
+        sentence += this.sentenceFormatter(monthDifference, 'month');
+        sentence += this.sentenceFormatter(dayDifference, 'day');
+        if (yearDifference > 0 || monthDifference > 0 || dayDifference > 0) {
+            sentence += 'ago';
+        }
+        else if (yearDifference < 0 || monthDifference < 0 || dayDifference < 0) {
+            sentence += 'from now';
+        }
+        return sentence || 'today';
+    };
     return D;
 }());
-var a = new D();
-var b = new D('6/1/2022');
-var c = new D(1970, 1, 5, 0, 0, 0);
-var d = new D(new Date());
-console.log(a.hours);
-console.log(b.date);
-console.log(c.mins);
-console.log(c.format('Y-M-D h:I:S'));
+// const a = new D()
+// const b = new D('6/1/2022')
+// const c = new D(1970, 1, 5, 0, 0, 0)
+// const d = new D(new Date())
+// console.log(a.hours)
+// console.log(b.date)
+// console.log(c.mins)
+// console.log(c.format('Y-M-D h:I:S'))
 // console.log(d.format('h:i:s'))
+// console.log(c.format('h/i/s'))
+var e = new D(2022, 0, 2, 3, 4, 5);
+console.log(e.when()); // 5 months ago
+var f = new D(2022, 9, 2, 3, 4, 5);
+console.log(f.when()); // 4 months 7 days from now
+var g = new D(2022, 5, 5, 3, 4, 5);
+console.log(g.when()); // 5 years from now
+var h = new D(2021, 3, 30, 3, 4, 5);
+console.log(h.when()); // 3 days from now
+var j = new D();
+console.log(j.when()); // today
