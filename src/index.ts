@@ -1,12 +1,12 @@
-
-class D {
+export class D {
   _date: Date
   _months: string[]
   _days: string[]
   constructor(...args: unknown[]) {
     this._date = new Date(...args as ConstructorParameters<typeof Date>)
     this._months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    this._days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+    this._days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    // Sunday - Saturday : 0 - 6
   }
 
   get year(): number {
@@ -28,12 +28,12 @@ class D {
   }
 
   get day(): string {
-    const dayIndex = this._date.getDay() - 1;
+    const dayIndex = this._date.getDay();
     return this._days[dayIndex];
   }
 
   get dy(): string {
-    const dayIndex = this._date.getDay() - 1;
+    const dayIndex = this._date.getDay();
     return this._days[dayIndex].slice(0, 3);
   }
 
@@ -48,11 +48,20 @@ class D {
   get mins(): number {
     return this._date.getMinutes();
   }
-
+  
+  /** 
+   * secs
+   * @returns {Number} Returns the seconds number
+   */
   get secs(): number {
     return this._date.getSeconds();
   }
 
+  /**
+   * _maskCharFormatter
+   * @param {String} char A character string
+   * @returns {String} Returns the corresponding formatted year, month, day, hours, minute, second, or other character string
+   */
   _maskCharFormatter(char: string): string {
     switch (char) {
       case 'Y':
@@ -71,10 +80,6 @@ class D {
         } else {
           return String(this.date);
         }
-      case '#':
-        // -> 1st (date with ordinal suffix: st, nd, rd or th)
-        this.date
-        return ''
       case 'H':
         if (this.hours < 10) {
           return '0' + String(this.hours);
@@ -104,6 +109,11 @@ class D {
     }
   }
 
+  /**
+   * format
+   * @param {String} str A string describing how the user wants a date formatted
+   * @returns {String} Returns the formatted date string with year, month, day, hours, minute, second, or other characters
+   */
   format(str = ''): string {
     /* 
     loop traverse the string,
@@ -148,36 +158,21 @@ class D {
     sentence += this.sentenceFormatter(monthDifference, 'month');
     sentence += this.sentenceFormatter(dayDifference, 'day');
 
-    // THIS IS BUGGY. REFINE IT!
-    if (yearDifference > 0 || monthDifference > 0 || dayDifference > 0) {
-      sentence += 'ago'
-    } else if (yearDifference < 0 || monthDifference < 0 || dayDifference < 0) {
-      sentence += 'from now'
+    if (yearDifference > 0) {
+      sentence += 'ago';
+    } else if (yearDifference < 0) {
+      sentence += 'from now';
+    } else if (monthDifference > 0) {
+      sentence += 'ago';
+    } else if (monthDifference < 0) {
+      sentence += 'from now';
+    } else if (dayDifference > 0) {
+      sentence += 'ago';
+    } else if (dayDifference < 0) {
+      sentence += 'from now';
     }
 
     return sentence || 'today';
   }
 }
 
-// const a = new D()
-// const b = new D('6/1/2022')
-// const c = new D(1970, 1, 5, 0, 0, 0)
-// const d = new D(new Date())
-
-// console.log(a.hours)
-// console.log(b.date)
-// console.log(c.mins)
-// console.log(c.format('Y-M-D h:I:S'))
-// console.log(d.format('h:i:s'))
-// console.log(c.format('h/i/s'))
-
-const e = new D(2022, 0, 2, 3, 4, 5)
-console.log(e.when()) // 5 months ago
-const f = new D(2022, 9, 2, 3, 4, 5)
-console.log(f.when()) // 4 months 7 days from now
-const g = new D(2022, 5, 5, 3, 4, 5)
-console.log(g.when()) // 5 years from now
-const h = new D(2021, 3, 30, 3, 4, 5)
-console.log(h.when()) // 3 days from now
-const j = new D()
-console.log(j.when()) // today

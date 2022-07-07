@@ -1,3 +1,4 @@
+"use strict";
 var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
         if (ar || !(i in from)) {
@@ -7,6 +8,8 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.D = void 0;
 var D = /** @class */ (function () {
     function D() {
         var args = [];
@@ -15,7 +18,8 @@ var D = /** @class */ (function () {
         }
         this._date = new (Date.bind.apply(Date, __spreadArray([void 0], args, false)))();
         this._months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        this._days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        this._days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        // Sunday - Saturday : 0 - 6
     }
     Object.defineProperty(D.prototype, "year", {
         get: function () {
@@ -49,7 +53,7 @@ var D = /** @class */ (function () {
     });
     Object.defineProperty(D.prototype, "day", {
         get: function () {
-            var dayIndex = this._date.getDay() - 1;
+            var dayIndex = this._date.getDay();
             return this._days[dayIndex];
         },
         enumerable: false,
@@ -57,7 +61,7 @@ var D = /** @class */ (function () {
     });
     Object.defineProperty(D.prototype, "dy", {
         get: function () {
-            var dayIndex = this._date.getDay() - 1;
+            var dayIndex = this._date.getDay();
             return this._days[dayIndex].slice(0, 3);
         },
         enumerable: false,
@@ -85,12 +89,21 @@ var D = /** @class */ (function () {
         configurable: true
     });
     Object.defineProperty(D.prototype, "secs", {
+        /**
+         * secs
+         * @returns {Number} Returns the seconds number
+         */
         get: function () {
             return this._date.getSeconds();
         },
         enumerable: false,
         configurable: true
     });
+    /**
+     * _maskCharFormatter
+     * @param {String} char A character string
+     * @returns {String} Returns the corresponding formatted year, month, day, hours, minute, second, or other character string
+     */
     D.prototype._maskCharFormatter = function (char) {
         switch (char) {
             case 'Y':
@@ -110,10 +123,6 @@ var D = /** @class */ (function () {
                 else {
                     return String(this.date);
                 }
-            case '#':
-                // -> 1st (date with ordinal suffix: st, nd, rd or th)
-                this.date;
-                return '';
             case 'H':
                 if (this.hours < 10) {
                     return '0' + String(this.hours);
@@ -145,6 +154,11 @@ var D = /** @class */ (function () {
                 return char;
         }
     };
+    /**
+     * format
+     * @param {String} str A string describing how the user wants a date formatted
+     * @returns {String} Returns the formatted date string with year, month, day, hours, minute, second, or other characters
+     */
     D.prototype.format = function (str) {
         /*
         loop traverse the string,
@@ -182,16 +196,29 @@ var D = /** @class */ (function () {
         sentence += this.sentenceFormatter(yearDifference, 'year');
         sentence += this.sentenceFormatter(monthDifference, 'month');
         sentence += this.sentenceFormatter(dayDifference, 'day');
-        if (yearDifference > 0 || monthDifference > 0 || dayDifference > 0) {
+        if (yearDifference > 0) {
             sentence += 'ago';
         }
-        else if (yearDifference < 0 || monthDifference < 0 || dayDifference < 0) {
+        else if (yearDifference < 0) {
+            sentence += 'from now';
+        }
+        else if (monthDifference > 0) {
+            sentence += 'ago';
+        }
+        else if (monthDifference < 0) {
+            sentence += 'from now';
+        }
+        else if (dayDifference > 0) {
+            sentence += 'ago';
+        }
+        else if (dayDifference < 0) {
             sentence += 'from now';
         }
         return sentence || 'today';
     };
     return D;
 }());
+exports.D = D;
 // const a = new D()
 // const b = new D('6/1/2022')
 // const c = new D(1970, 1, 5, 0, 0, 0)
@@ -202,13 +229,14 @@ var D = /** @class */ (function () {
 // console.log(c.format('Y-M-D h:I:S'))
 // console.log(d.format('h:i:s'))
 // console.log(c.format('h/i/s'))
-var e = new D(2022, 0, 2, 3, 4, 5);
-console.log(e.when()); // 5 months ago
-var f = new D(2022, 9, 2, 3, 4, 5);
-console.log(f.when()); // 4 months 7 days from now
-var g = new D(2022, 5, 5, 3, 4, 5);
-console.log(g.when()); // 5 years from now
-var h = new D(2021, 3, 30, 3, 4, 5);
-console.log(h.when()); // 3 days from now
-var j = new D();
-console.log(j.when()); // today
+// (year, month, day, hours, mins, secs)
+// const e = new D(2022, 0, 2, 3, 4, 5)
+// console.log(e.when()) // 5 months ago
+// const f = new D(2022, 9, 2, 3, 4, 5)
+// console.log(f.when()) // 4 months 7 days from now. 2 months and 28 days from now?
+// const g = new D(2022, 5, 5, 3, 4, 5)
+// console.log(g.when()) // 5 years from now
+// const h = new D(2021, 3, 30, 3, 4, 5)
+// console.log(h.when()) // 3 days from now
+// const j = new D()
+// console.log(j.when()) // today
