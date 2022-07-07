@@ -219,24 +219,3 @@ var D = /** @class */ (function () {
     return D;
 }());
 exports.D = D;
-// const a = new D()
-// const b = new D('6/1/2022')
-// const c = new D(1970, 1, 5, 0, 0, 0)
-// const d = new D(new Date())
-// console.log(a.hours)
-// console.log(b.date)
-// console.log(c.mins)
-// console.log(c.format('Y-M-D h:I:S'))
-// console.log(d.format('h:i:s'))
-// console.log(c.format('h/i/s'))
-// (year, month, day, hours, mins, secs)
-// const e = new D(2022, 0, 2, 3, 4, 5)
-// console.log(e.when()) // 5 months ago
-// const f = new D(2022, 9, 2, 3, 4, 5)
-// console.log(f.when()) // 4 months 7 days from now. 2 months and 28 days from now?
-// const g = new D(2022, 5, 5, 3, 4, 5)
-// console.log(g.when()) // 5 years from now
-// const h = new D(2021, 3, 30, 3, 4, 5)
-// console.log(h.when()) // 3 days from now
-// const j = new D()
-// console.log(j.when()) // today
