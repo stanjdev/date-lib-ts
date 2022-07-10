@@ -1,7 +1,7 @@
 # TS-JS Date Library
 
-![npm](https://img.shields.io/npm/v/string-lib-1)
-![npm bundle size](https://img.shields.io/bundlephobia/min/string-lib-1)
+![npm](https://img.shields.io/npm/v/ts-date-library)
+![npm bundle size](https://img.shields.io/bundlephobia/min/ts-date-library)
 
 A simpler Date library for Javascript.
 
@@ -13,7 +13,7 @@ Use the package manager [npm](https://docs.npmjs.com/cli/v8/commands/npm) to ins
 npm i ts-date-library
 ```
 
-[Link to npm library](https://www.npmjs.com/package/string-lib-1)
+[Link to npm library](https://www.npmjs.com/package/ts-date-library)
 
 ## Usage
 
