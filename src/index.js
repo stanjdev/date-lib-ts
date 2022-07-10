@@ -187,8 +187,8 @@ var D = /** @class */ (function () {
         }
         return "".concat(Math.abs(difference), " ").concat(string).concat(Math.abs(difference) === 1 ? '' : 's', " ");
     };
-    D.prototype.when = function () {
-        var now = new Date();
+    D.prototype.when = function (now) {
+        if (now === void 0) { now = new Date(); }
         var yearDifference = now.getFullYear() - this.year;
         var monthDifference = now.getMonth() - this._date.getMonth();
         var dayDifference = now.getDate() - this.date;

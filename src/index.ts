@@ -48,8 +48,8 @@ export class D {
   get mins(): number {
     return this._date.getMinutes();
   }
-  
-  /** 
+
+  /**
    * secs
    * @returns {Number} Returns the seconds number
    */
@@ -115,13 +115,13 @@ export class D {
    * @returns {String} Returns the formatted date string with year, month, day, hours, minute, second, or other characters
    */
   format(str = ''): string {
-    /* 
+    /*
     loop traverse the string,
       helper method to check for the chars:
-      if pointer comes across d, D, y, Y, s, S for example, 
-      append to new string that value, 
-      and if it is '/' or '-' not matching the letters, 
-      then just append that literal character to the new string, 
+      if pointer comes across d, D, y, Y, s, S for example,
+      append to new string that value,
+      and if it is '/' or '-' not matching the letters,
+      then just append that literal character to the new string,
     return new string
     */
 
@@ -146,8 +146,7 @@ export class D {
     return `${Math.abs(difference)} ${string}${Math.abs(difference) === 1 ? '' : 's'} `;
   }
 
-  when(): string {
-    const now = new Date();
+  when(now: Date = new Date()): string {
     const yearDifference = now.getFullYear() - this.year;
     const monthDifference = now.getMonth() - this._date.getMonth();
     const dayDifference = now.getDate() - this.date;

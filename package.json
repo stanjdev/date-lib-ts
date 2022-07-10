@@ -1,5 +1,5 @@
 {
-  "name": "3-date-textcontent-lib",
+  "name": "ts-date-library",
   "version": "1.0.0",
   "description": "A Date library written in TypeScript",
   "main": "index.js",

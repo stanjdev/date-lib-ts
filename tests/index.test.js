@@ -72,14 +72,16 @@ test('format method returns the correctly formatted string', () => {
 });
 
 test('when method returns the correctly formatted string', () => {
-  expect(testDate.when()).toBe('3 months 16 days from now');
-  expect(testDate2.when()).toBe('40 years 1 month 5 days ago');
-  expect(testDateToday.when()).toBe('today');
-  expect(testDate3.when()).toBe('1 year 3 months 24 days ago');
-  expect(testDate5.when()).toBe('3 years 1 month 6 days from now');
-  expect(testDate6.when()).toBe('5 months 6 days ago');
-  expect(testDate7.when()).toBe('5 days ago');
-  expect(testDate8.when()).toBe('24 days from now');
+  // Mock date to pass when() tests regardless of what day Today is
+  const mockDate = new Date(2022, 6, 6);
+  expect(testDate.when(mockDate)).toBe('3 months 16 days from now');
+  expect(testDate2.when(mockDate)).toBe('40 years 1 month 5 days ago');
+  expect(testDateToday.when(new Date())).toBe('today');
+  expect(testDate3.when(mockDate)).toBe('1 year 3 months 24 days ago');
+  expect(testDate5.when(mockDate)).toBe('3 years 1 month 6 days from now');
+  expect(testDate6.when(mockDate)).toBe('5 months 6 days ago');
+  expect(testDate7.when(mockDate)).toBe('5 days ago');
+  expect(testDate8.when(mockDate)).toBe('24 days from now');
 });
 
 test('sentenceFormatter method returns the correctly formatted sentence, including pluralization', () => {
@@ -109,5 +111,4 @@ test('_maskCharFormatter method returns the correctly formatted character', () =
   expect(testDate._maskCharFormatter('')).toBe('');
   expect(testDate._maskCharFormatter()).toBe(undefined);
 });
-
 
