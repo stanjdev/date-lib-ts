@@ -1,11 +1,13 @@
+import { months, days } from "./helpers.js";
+
 export class D {
   _date: Date
-  _months: string[]
-  _days: string[]
+  _months: readonly string[]
+  _days: readonly string[]
   constructor(...args: unknown[]) {
     this._date = new Date(...args as ConstructorParameters<typeof Date>)
-    this._months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-    this._days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    this._months = months
+    this._days = days
     // Sunday - Saturday : 0 - 6
   }
 

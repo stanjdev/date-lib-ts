@@ -10,6 +10,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.D = void 0;
+var helpers_js_1 = require("./helpers.js");
 var D = /** @class */ (function () {
     function D() {
         var args = [];
@@ -17,8 +18,8 @@ var D = /** @class */ (function () {
             args[_i] = arguments[_i];
         }
         this._date = new (Date.bind.apply(Date, __spreadArray([void 0], args, false)))();
-        this._months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        this._days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        this._months = helpers_js_1.months;
+        this._days = helpers_js_1.days;
         // Sunday - Saturday : 0 - 6
     }
     Object.defineProperty(D.prototype, "year", {
